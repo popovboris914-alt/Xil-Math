@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Xil Math EU</title>
+    <style>button {
+    background-color: rgb(226, 240, 217);
+    border: 1px solid black;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+
+  input[type="number"] {
+    background-color: rgb(226, 240, 217);
+    border: 2px solid black;
+    padding: 4px;
+    width: 80px;
+  }
+
+  .result {
+    margin-left: 6px;
+  }
+    h3 {
+  color: rgb(11, 94, 87);
+  font-family: Segoe UI;
+  font-size: 300%}
+   h3 {
+  outline: 4px groove rgb(226, 240, 217);
+}
+h3 {
+  text-align: center;
+  margin-top: 1;
+}
+
+ </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h3>Xil Eu
+</h3>
+<div id="quiz"></div>
+<p id="finalResult"></p>
+
+<button onclick="checkAnswers()">Check</button>
+<button onclick="printQuiz()" id="printBtn" disabled>Print</button>
+<button onclick="restart()">Restart</button>
+
+<script>
+  const TOTAL = 20;
+  let problems = [];
+  let checked = false;
+
+  function limitValue(input) {
+    if (input.value === "") return;
+    let v = Number(input.value);
+    if (v > 1000) input.value = 1000;
+    if (v < 0) input.value = 0;
+  }
+
+  function generateQuiz() {
+    problems = [];
+    checked = false;
+    document.getElementById("quiz").innerHTML = "";
+    document.getElementById("finalResult").textContent = "";
+    document.getElementById("printBtn").disabled = true;
+
+    for (let i = 0; i < TOTAL; i++) {
+      let a = Math.floor(Math.random() * 1001); // 0–1000
+      let b = Math.floor(Math.random() * 1001); // 0–1000
+      let op = Math.random() < 0.5 ? "+" : "-";
+
+      if (op === "-") {
+        // make sure subtraction is not negative
+        if (a < b) [a, b] = [b, a];
+      } else {
+        // addition should not exceed 1000
+        if (a + b > 1000) b = 1000 - a;
+      }
+
+      let answer = op === "+" ? a + b : a - b;
+      problems.push(answer);
+
+      const div = document.createElement("div");
+      div.className = "problem";
+      div.innerHTML = `
+        <label>${a} ${op} ${b} = </label>
+        <input type="number" min="0" max="1000" oninput="limitValue(this)">
+        <span class="result"></span>
+      `;
+      document.getElementById("quiz").appendChild(div);
+    }
+  }
+
+  function checkAnswers() {
+    const inputs = document.querySelectorAll("#quiz input");
+    const results = document.querySelectorAll(".result");
+    let allCorrect = true;
+
+    inputs.forEach((input, i) => {
+      input.disabled = true;
+      if (input.value != problems[i]) {
+        results[i].textContent = " Correct: " + problems[i];
+        allCorrect = false;
+      } else {
+        results[i].textContent = "";
+      }
+    });
+
+    document.getElementById("finalResult").textContent = allCorrect ? "Good!" : "";
+
+    checked = true;
+    document.getElementById("printBtn").disabled = false;
+  }
+
+  function printQuiz() {
+    if (!checked) {
+      alert("Please click Check before printing!");
+      return;
+    }
+    window.print();
+  }
+
+  function restart() {
+    generateQuiz();
+  }
+
+  generateQuiz();
+</script>
+
+</form>   
+</body>
+</html> 
