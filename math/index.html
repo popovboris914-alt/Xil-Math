@@ -1,7 +1,7 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Math By XIL</title>
+  <title>XIL - Home</title>
   <link rel="icon" type="image/png" href="xil_web.ico">
     <style>button {
     background-color: rgb(226, 240, 217);
@@ -157,7 +157,23 @@ section {
   generateQuiz();
 </script>
 
-</form>   
+</form>
+
+<script>
+function fixMobileLayout() {
+  if (window.innerWidth < 700) {
+    const section = document.querySelector("section");
+    const heading = document.querySelector("h3");
+
+    section.style.margin = "20px";
+    heading.style.margin = "10px";
+    heading.style.fontSize = "22px";
+  }
+}
+
+window.addEventListener("load", fixMobileLayout);
+window.addEventListener("resize", fixMobileLayout);
+</script>
+
 </body>
 </html> 
-
