@@ -53,5 +53,60 @@
         Math</a>
     <img src="xil_web.ico" alt="logo" class="logo">
     <p>XIL © 2026</p>
+
+<script>
+function scaleMathButtonImage() {
+  const btn = document.querySelector(".math");
+  const icon = btn.querySelector(".math-icon");
+  const heading = document.querySelector("h3");
+  const logo = document.querySelector(".logo"); // define logo!
+
+  if (window.innerWidth < 700) {
+    // Shrink button
+    btn.style.width = "110px";
+    btn.style.height = "110px";
+    btn.style.fontSize = "27px";
+    btn.style.padding = "8px";
+
+    // Shrink icon
+    icon.style.height = "60px";
+    icon.style.width = "auto";
+    icon.style.display = "block";
+    icon.style.marginLeft = "auto";
+    icon.style.marginRight = "auto";
+
+    // Shrink heading
+    heading.style.fontSize = "28px";
+
+    // Shrink logo for small screens
+    logo.style.height = "80px";
+    logo.style.width = "auto";
+    logo.style.display = "block";
+    logo.style.marginLeft = "auto";
+    logo.style.marginRight = "auto";
+  } else {
+    // Restore PC layout
+    btn.style.width = "150px";
+    btn.style.height = "150px";
+    btn.style.fontSize = "250%";
+    btn.style.padding = "12px 24px";
+
+    icon.style.height = "90px";
+    icon.style.width = "auto";
+    icon.style.display = "";
+    icon.style.marginLeft = "";
+    icon.style.marginRight = "";
+
+    heading.style.fontSize = "400%";
+
+    logo.style.height = "100px";
+    logo.style.width = "auto";
+  }
+}
+
+window.addEventListener("load", scaleMathButtonImage);
+window.addEventListener("resize", scaleMathButtonImage);
+</script>
+    
 </body>
 </html>
