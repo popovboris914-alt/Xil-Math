@@ -1,12 +1,163 @@
-<!DOCTYPE html>
-<html>
+ <!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>About</title>
+  <title>Math By XIL</title>
+  <link rel="icon" type="image/png" href="xil_web.ico">
+    <style>button {
+    background-color: rgb(226, 240, 217);
+    border: 1px solid black;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-bottom:20px ;
+    
+  }
+
+  input[type="number"] {
+    background-color: rgb(226, 240, 217);
+    border: 2px solid black;
+    border-radius: 2px;
+    padding: 4px;
+    width: 80px;
+  }
+
+  .result {
+    margin-left: 6px;
+  }
+    h3 {
+  color: rgb(0, 0, 0);
+  font-family: Segoe UI;
+  font-size: 300%;}
+   h3 {
+  border: 4px solid rgb(0, 0, 0);
+  border-radius: 4px;
+  background: linear-gradient(to right, #acffa9, #3fc025);
+}
+h3 {
+  text-align: center;
+  margin-top: 1;
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+label {font-family: Segoe UI;
+color: black;}
+
+span {font-family: Segoe UI;
+color: rgb(255, 0, 0);}
+
+span {
+  color: rgb(255, 0, 0);                 /* fill color */
+  -webkit-text-stroke: 0.2px rgb(124, 0, 0); /* outline thickness + color */
+}
+
+section {
+  text-align: center;
+  background: linear-gradient(to right, rgb(198, 234, 255), rgb(254, 255, 180));
+  border: 10px solid ;
+  border-radius: 4px;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+
+ </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-  <h1>About Page</h1>
-  <p>This is my new subpage.</p>
+<section>
+<h3 class="heading">Test your math skills | XIL</h3>
+<div id="quiz"></div>
+<p id="finalResult"></p>
+<button onclick="checkAnswers()">Check</button>
+<button onclick="printQuiz()" id="printBtn" disabled>Print</button>
+<button onclick="restart()">Restart</button>
+</section>
+<script>
+  const TOTAL = 20;
+  let problems = [];
+  let checked = false;
 
-  <a href="/">Go back home</a>
+  function limitValue(input) {
+    if (input.value === "") return;
+    let v = Number(input.value);
+    if (v > 1000) input.value = 1000;
+    if (v < 0) input.value = 0;
+  }
+
+  function generateQuiz() {
+    problems = [];
+    checked = false;
+    document.getElementById("quiz").innerHTML = "";
+    document.getElementById("finalResult").textContent = "";
+    document.getElementById("printBtn").disabled = true;
+
+    for (let i = 0; i < TOTAL; i++) {
+      let a = Math.floor(Math.random() * 1001); // 0–1000
+      let b = Math.floor(Math.random() * 1001); // 0–1000
+      let op = Math.random() < 0.5 ? "+" : "-";
+
+      if (op === "-") {
+        // make sure subtraction is not negative
+        if (a < b) [a, b] = [b, a];
+      } else {
+        // addition should not exceed 1000
+        if (a + b > 1000) b = 1000 - a;
+      }
+
+      let answer = op === "+" ? a + b : a - b;
+      problems.push(answer);
+
+      const div = document.createElement("div");
+      div.className = "problem";
+      div.innerHTML = `
+        <label>${a} ${op} ${b} = </label>
+        <input type="number" min="0" max="1000" oninput="limitValue(this)">
+        <span class="result"></span>
+      `;
+      document.getElementById("quiz").appendChild(div);
+    }
+  }
+
+  function checkAnswers() {
+    const inputs = document.querySelectorAll("#quiz input");
+    const results = document.querySelectorAll(".result");
+    let allCorrect = true;
+
+    inputs.forEach((input, i) => {
+      input.disabled = true;
+      if (input.value != problems[i]) {
+        results[i].textContent = " Correct: " + problems[i];
+        allCorrect = false;
+      } else {
+        results[i].textContent = "";
+      }
+    });
+
+    document.getElementById("finalResult").textContent = allCorrect ? "Good!" : "";
+
+    checked = true;
+    document.getElementById("printBtn").disabled = false;
+  }
+
+  function printQuiz() {
+    if (!checked) {
+      alert("Please click Check before printing!");
+      return;
+    }
+    window.print();
+  }
+
+  function restart() {
+    generateQuiz();
+  }
+
+  generateQuiz();
+</script>
+
+</form>   
 </body>
-</html>
+</html> 
+
