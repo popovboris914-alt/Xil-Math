@@ -4,126 +4,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Z - Home</title>
- <link rel="icon" type="image/x-icon" href="xil_web.ico">
+
+    <link rel="icon" type="image/x-icon" href="xil_web.ico">
+
     <style>
-        h3 {
-            font-size: 400%;
-            margin-top: 3px;
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: Segoe UI;
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: "Segoe UI", sans-serif;
             text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e4f6df,
+                    #f5f9d8,
+                    #d9f1e1
+                );
+
+            color: #183c25;
         }
+
+        h3 {
+            font-size: 400%;
+            margin: 30px 0 35px;
+
+            color: #183c25;
+        }
+
+        .subjects {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+
+            flex-wrap: wrap;
+        }
+
+
+        /* =========================
+           SUBJECT BUTTONS
+        ========================== */
+
+        .subject {
+            display: flex;
+
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            padding: 12px;
+
+            width: 180px;
+            height: 180px;
+
+            border-radius: 22px;
+
+            text-decoration: none;
+
+            font-size: 230%;
+            font-weight: bold;
+
+            color: white;
+
+            border: 3px solid rgba(255,255,255,.8);
+
+            box-shadow:
+                0 12px 30px rgba(40,90,50,.18);
+
+            transition:
+                transform .35s ease,
+                box-shadow .35s ease,
+                filter .35s ease;
+        }
+
+        .subject:hover {
+            transform:
+                translateY(-8px)
+                scale(1.03);
+
+            box-shadow:
+                0 20px 40px rgba(40,90,50,.25);
+
+            filter: brightness(1.05);
+        }
+
+        .subject:active {
+            transform: scale(.96);
+        }
+
+
+        /* =========================
+           MATH
+        ========================== */
 
         .math {
-            display: inline-block;
-            /* use flex layout */
-            flex-direction: column;
-            /* stack vertically */
-            align-items: center;
-            /* center horizontally */
-            justify-content: center;
-            /* center vertically if needed */
-            padding: 12px 24px;
-            background: linear-gradient(to bottom, rgb(255, 201, 120), rgb(230, 255, 90));
-            font-size: 250%;
-            color: rgb(255, 200, 174);
-            outline: 4px black;
-            -webkit-text-stroke: 1.1px rgb(122, 0, 0);
-            /* outline width and color */
-            text-decoration: none;
-            /* removes underline */
-            border-radius: 8px;
-            font-weight: bold;
-            font-weight: bold;
-            width: 150px;
-            height: 150px;
-            border: 4px black solid;
-        }
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffbd70,
+                    #e8ed72
+                );
 
-        .math:hover {
-            filter: brightness(85%);
-            /* makes it darker */
+            color: #fff4df;
+
+            -webkit-text-stroke:
+                1px #7a3e00;
         }
 
         .math-icon {
             height: 90px;
+            width: auto;
+
+            margin-bottom: 8px;
         }
+
+
+        /* =========================
+           ENGLISH
+        ========================== */
+
+        .english {
+            background:
+                linear-gradient(
+                    135deg,
+                    #72c985,
+                    #b5db70
+                );
+
+            color: #f4fff2;
+
+            -webkit-text-stroke:
+                1px #28633a;
+        }
+
+        .english-icon {
+            height: 90px;
+            width: auto;
+
+            margin-bottom: 8px;
+        }
+
+
+        /* =========================
+           LOGO
+        ========================== */
 
         .logo {
             display: block;
-            /* forces it onto its own line */
-            margin: 20px auto 0;
-            /* centers horizontally with some top spacing */
+
+            margin: 55px auto 0;
+
             height: 100px;
-            /* optional: adjust size */
+            width: auto;
+
+            filter:
+                drop-shadow(
+                    0 8px 12px
+                    rgba(30,80,40,.15)
+                );
         }
-    </style>
-</head>
 
-<body>
-    <h3>Choose</h3>
-    <a href="https://xil-learnsthings.vercel.app/math" class="math">
-        <img src="calculate-math-icon.webp" alt="mathicon" class="math-icon">
-        Math</a>
-    <img src="xil_web.ico" alt="logo" class="logo">
-    <p>Z © 2026</p>
+        .copyright {
+            color: #587461;
+            font-size: 14px;
+        }
 
-    <script>
-        function scaleMathButtonImage() {
-            const btn = document.querySelector(".math");
-            const icon = btn.querySelector(".math-icon");
-            const heading = document.querySelector("h3");
-            const logo = document.querySelector(".logo"); // define logo!
 
-            if (window.innerWidth < 700) {
-                // Shrink button
-                btn.style.width = "110px";
-                btn.style.height = "110px";
-                btn.style.fontSize = "27px";
-                btn.style.padding = "8px";
+        /* =========================
+           MOBILE
+        ========================== */
 
-                // Shrink icon
-                icon.style.height = "60px";
-                icon.style.width = "auto";
-                icon.style.display = "block";
-                icon.style.marginLeft = "auto";
-                icon.style.marginRight = "auto";
+        @media (max-width: 700px) {
 
-                // Shrink heading
-                heading.style.fontSize = "28px";
+            h3 {
+                font-size: 32px;
+                margin-top: 25px;
+            }
 
-                // Shrink logo for small screens
-                logo.style.height = "80px";
-                logo.style.width = "auto";
-                logo.style.display = "block";
-                logo.style.marginLeft = "auto";
-                logo.style.marginRight = "auto";
-            } else {
-                // Restore PC layout
-                btn.style.width = "150px";
-                btn.style.height = "150px";
-                btn.style.fontSize = "250%";
-                btn.style.padding = "12px 24px";
+            .subjects {
+                gap: 15px;
+            }
 
-                icon.style.height = "90px";
-                icon.style.width = "auto";
-                icon.style.display = "";
-                icon.style.marginLeft = "";
-                icon.style.marginRight = "";
+            .subject {
+                width: 140px;
+                height: 140px;
 
-                heading.style.fontSize = "400%";
+                font-size: 26px;
+            }
 
-                logo.style.height = "100px";
-                logo.style.width = "auto";
+            .math-icon,
+            .english-icon {
+                height: 65px;
+            }
+
+            .logo {
+                height: 80px;
+                margin-top: 40px;
             }
         }
 
-        window.addEventListener("load", scaleMathButtonImage);
-        window.addEventListener("resize", scaleMathButtonImage);
-    </script>
+    </style>
+</head>
+
+
+<body>
+
+    <h3>Choose</h3>
+
+
+    <div class="subjects">
+
+        <!-- MATH -->
+
+        <a
+            href="/math"
+            class="subject math"
+        >
+            <img
+                src="calculate-math-icon.webp"
+                alt="Math"
+                class="math-icon"
+            >
+
+            Math
+        </a>
+
+
+        <!-- ENGLISH -->
+
+        <a
+            href="/english"
+            class="subject english"
+        >
+            📚
+            <span>English</span>
+        </a>
+
+    </div>
+
+
+    <img
+        src="xil_web.ico"
+        alt="Z logo"
+        class="logo"
+    >
+
+    <p class="copyright">
+        Z © 2026
+    </p>
 
 </body>
 
