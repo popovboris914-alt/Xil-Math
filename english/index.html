@@ -1,1 +1,2318 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Z - English</title>
+  <link rel="icon" type="image/png" href="xil_web.ico">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+    :root {
+      --dark: #143622;
+      --dark2: #245c36;
+      --green: #3e9455;
+      --green2: #65b875;
+      --pale: #e7f5e6;
+      --pale2: #f4faf0;
+
+      --red: #c64f59;
+      --red-bg: #fff0f1;
+
+      --text: #193725;
+      --muted: #6c8673;
+
+      --shadow: 0 25px 70px rgba(30, 85, 44, .14);
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 35px 16px;
+
+      font-family: "DM Sans", sans-serif;
+      color: var(--text);
+
+      background:
+        radial-gradient(circle at 8% 8%, rgba(114,195,126,.48), transparent 28%),
+        radial-gradient(circle at 92% 12%, rgba(188,222,119,.55), transparent 30%),
+        radial-gradient(circle at 50% 110%, rgba(91,177,111,.35), transparent 35%),
+        linear-gradient(135deg, #dcefdc, #f0f8e9 48%, #d5ecd7);
+
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .28;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    body::before {
+      background: #55af6b;
+      left: -130px;
+      top: -120px;
+      animation: float1 14s ease-in-out infinite alternate;
+    }
+
+    body::after {
+      background: #acd56c;
+      right: -130px;
+      bottom: -120px;
+      animation: float2 17s ease-in-out infinite alternate;
+    }
+
+    .app {
+      width: min(960px, 100%);
+      margin: auto;
+
+      padding: 30px;
+
+      border-radius: 30px;
+
+      background: rgba(255,255,255,.63);
+      border: 1px solid rgba(255,255,255,.8);
+
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+
+      box-shadow:
+        var(--shadow),
+        inset 0 1px 0 rgba(255,255,255,.9);
+
+      animation: appIn .8s var(--ease);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .app::before {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+
+      height: 5px;
+
+      background: linear-gradient(
+        90deg,
+        #225c35,
+        #64bb73,
+        #c0dd72,
+        #64bb73,
+        #225c35
+      );
+
+      background-size: 250% 100%;
+
+      animation: gradient 5s linear infinite;
+    }
+
+    /* HEADER */
+
+    .header {
+      padding: 30px;
+      margin-bottom: 25px;
+
+      border-radius: 23px;
+
+      color: white;
+
+      background:
+        radial-gradient(
+          circle at 90% 5%,
+          rgba(170,230,160,.3),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          #143622,
+          #245d37 55%,
+          #398650
+        );
+
+      box-shadow:
+        0 18px 35px rgba(30,90,45,.2);
+
+      animation: headerIn .8s var(--ease);
+    }
+
+    .header h1 {
+      margin: 0;
+
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+
+    .header p {
+      margin: 13px 0 0;
+
+      color: #cdebd1;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* SCREENS */
+
+    .screen {
+      animation: screenIn .6s var(--ease);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .section-title {
+      margin: 0 0 8px;
+
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 22px;
+    }
+
+    .section-subtitle {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* CHOICE CARDS */
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+
+      margin-bottom: 28px;
+    }
+
+    .choice {
+      border: 2px solid transparent;
+      border-radius: 18px;
+
+      padding: 20px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.9),
+          rgba(235,247,232,.8)
+        );
+
+      text-align: left;
+      cursor: pointer;
+
+      transition:
+        transform .4s var(--ease),
+        box-shadow .4s var(--ease),
+        border-color .3s ease,
+        background .3s ease;
+    }
+
+    .choice:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 13px 30px rgba(40,100,50,.1);
+      border-color: #9bcda1;
+    }
+
+    .choice.selected {
+      border-color: #44985a;
+
+      background:
+        linear-gradient(
+          135deg,
+          #e1f3e1,
+          #f2faed
+        );
+
+      box-shadow:
+        0 0 0 4px rgba(68,152,90,.1),
+        0 13px 30px rgba(40,100,50,.1);
+
+      transform: translateY(-3px);
+    }
+
+    .choice-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .choice-title {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .choice-desc {
+      margin-top: 5px;
+
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    /* DIFFICULTY */
+
+    .difficulty {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+
+      margin-bottom: 25px;
+    }
+
+    .difficulty button {
+      padding: 13px 8px;
+
+      border-radius: 13px;
+
+      border: 1px solid #c7dfc8;
+
+      background: rgba(255,255,255,.75);
+
+      color: #42634b;
+
+      font-family: "DM Sans", sans-serif;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition:
+        transform .35s var(--ease),
+        background .3s ease,
+        border-color .3s ease,
+        box-shadow .35s var(--ease);
+    }
+
+    .difficulty button:hover {
+      transform: translateY(-2px);
+      border-color: #8abd91;
+    }
+
+    .difficulty button.selected {
+      color: white;
+      border-color: transparent;
+
+      background: linear-gradient(
+        135deg,
+        #287044,
+        #4ca565
+      );
+
+      box-shadow:
+        0 8px 20px rgba(42,112,68,.2);
+    }
+
+    /* START */
+
+    .start-button {
+      width: 100%;
+
+      padding: 16px;
+
+      border: none;
+      border-radius: 15px;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          135deg,
+          #225d35,
+          #409357
+        );
+
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 10px 25px rgba(35,100,52,.2);
+
+      transition:
+        transform .4s var(--ease),
+        box-shadow .4s var(--ease);
+    }
+
+    .start-button:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 16px 32px rgba(35,100,52,.25);
+    }
+
+    .start-button:active {
+      transform: scale(.98);
+    }
+
+    /* PROGRESS */
+
+    .progress-area {
+      margin-bottom: 22px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+
+      margin-bottom: 8px;
+
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .progress-bar {
+      height: 9px;
+
+      border-radius: 20px;
+
+      background: rgba(166,201,169,.4);
+
+      overflow: hidden;
+    }
+
+    .progress {
+      width: 0;
+      height: 100%;
+
+      border-radius: 20px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #287044,
+          #57ad68,
+          #a5cf69
+        );
+
+      transition: width .6s var(--ease);
+    }
+
+    /* QUESTION */
+
+    .question-card {
+      padding: 25px;
+
+      border-radius: 20px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.92),
+          rgba(239,249,237,.8)
+        );
+
+      border: 1px solid rgba(100,150,110,.17);
+
+      box-shadow:
+        0 8px 22px rgba(40,90,50,.06);
+
+      animation: questionIn .55s var(--ease);
+    }
+
+    .question-tag {
+      display: inline-block;
+
+      margin-bottom: 13px;
+
+      padding: 6px 10px;
+
+      border-radius: 8px;
+
+      color: #3b814d;
+
+      background: #e2f2e0;
+
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .question-text {
+      margin-bottom: 22px;
+
+      font-family: "Plus Jakarta Sans", sans-serif;
+
+      font-size: clamp(18px, 4vw, 23px);
+      line-height: 1.45;
+
+      font-weight: 700;
+
+      color: #214b2d;
+    }
+
+    /* ANSWERS */
+
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+    }
+
+    .answer {
+      padding: 15px;
+
+      border-radius: 13px;
+
+      border: 1px solid #c7dfca;
+
+      background: rgba(255,255,255,.8);
+
+      color: #315b3b;
+
+      font-family: "DM Sans", sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+
+      text-align: left;
+
+      cursor: pointer;
+
+      transition:
+        transform .35s var(--ease),
+        box-shadow .35s var(--ease),
+        border-color .3s ease,
+        background .3s ease;
+    }
+
+    .answer:hover:not(:disabled) {
+      transform: translateY(-3px);
+
+      border-color: #7dbb88;
+
+      box-shadow:
+        0 8px 20px rgba(45,100,55,.09);
+    }
+
+    .answer.selected {
+      border-color: #489b5c;
+
+      background: #e4f5e3;
+
+      box-shadow:
+        0 0 0 3px rgba(72,155,92,.1);
+    }
+
+    .answer.correct {
+      color: #27683a;
+
+      border-color: #5ca96c;
+
+      background: #ddf3df;
+
+      animation: correct .5s var(--ease);
+    }
+
+    .answer.wrong {
+      color: #ae3945;
+
+      border-color: #db7279;
+
+      background: var(--red-bg);
+
+      animation: shake .45s ease;
+    }
+
+    .answer:disabled {
+      cursor: default;
+    }
+
+    .answer-icon {
+      float: right;
+      font-size: 17px;
+      font-weight: 900;
+
+      animation: icon .4s var(--ease);
+    }
+
+    /* EXPLANATION */
+
+    .explanation {
+      margin-top: 17px;
+      padding: 14px 16px;
+
+      border-radius: 12px;
+
+      background: #eef7eb;
+
+      border-left: 4px solid #62a96c;
+
+      color: #55715d;
+
+      font-size: 13px;
+      line-height: 1.5;
+
+      animation: explanationIn .5s var(--ease);
+    }
+
+    .explanation strong {
+      color: #2d7140;
+    }
+
+    /* QUIZ CONTROLS */
+
+    .quiz-controls {
+      display: flex;
+      justify-content: space-between;
+
+      gap: 10px;
+
+      margin-top: 18px;
+    }
+
+    .control-button {
+      flex: 1;
+
+      padding: 13px;
+
+      border: none;
+      border-radius: 13px;
+
+      color: white;
+
+      background: linear-gradient(
+        135deg,
+        #287044,
+        #44965a
+      );
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition:
+        transform .35s var(--ease),
+        box-shadow .35s var(--ease);
+    }
+
+    .control-button:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 9px 20px rgba(40,110,60,.18);
+    }
+
+    .control-button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .secondary {
+      color: #3c6947;
+      background: #e1f0df;
+    }
+
+    /* RESULT */
+
+    .result-card {
+      text-align: center;
+
+      padding: 35px 25px;
+
+      border-radius: 23px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #e0f3df,
+          #f1f9e9
+        );
+
+      border: 1px solid #c2dfc3;
+
+      animation: resultIn .8s var(--ease);
+    }
+
+    .result-emoji {
+      font-size: 50px;
+
+      animation: emoji .8s var(--ease);
+    }
+
+    .score {
+      margin-top: 8px;
+
+      font-family: "Plus Jakarta Sans", sans-serif;
+
+      font-size: 52px;
+      font-weight: 800;
+
+      color: #287044;
+    }
+
+    .percent {
+      margin-top: 3px;
+
+      font-size: 22px;
+      font-weight: 800;
+
+      color: #3c7b4c;
+    }
+
+    .result-message {
+      margin: 12px auto 0;
+
+      max-width: 500px;
+
+      color: #64806b;
+
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .result-details {
+      display: flex;
+      justify-content: center;
+
+      gap: 10px;
+
+      margin-top: 22px;
+    }
+
+    .stat {
+      min-width: 100px;
+
+      padding: 12px;
+
+      border-radius: 12px;
+
+      background: rgba(255,255,255,.65);
+
+      color: #55715c;
+
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .stat strong {
+      display: block;
+
+      color: #287044;
+
+      font-size: 20px;
+    }
+
+    /* ANIMATIONS */
+
+    @keyframes appIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes headerIn {
+      from {
+        opacity: 0;
+        transform: translateY(-15px) scale(.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes screenIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes questionIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px) scale(.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes correct {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.035); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    @keyframes icon {
+      from {
+        opacity: 0;
+        transform: scale(.3);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes explanationIn {
+      from {
+        opacity: 0;
+        transform: translateY(7px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes resultIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes emoji {
+      0% {
+        transform: scale(.3) rotate(-15deg);
+      }
+
+      70% {
+        transform: scale(1.15) rotate(4deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0);
+      }
+    }
+
+    @keyframes float1 {
+      0% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(80px,50px) scale(1.15); }
+      100% { transform: translate(20px,100px) scale(.95); }
+    }
+
+    @keyframes float2 {
+      0% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(-70px,-50px) scale(1.12); }
+      100% { transform: translate(-20px,-100px) scale(.95); }
+    }
+
+    @keyframes gradient {
+      from { background-position: 0% 50%; }
+      to { background-position: 250% 50%; }
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+
+      body {
+        padding: 12px 9px;
+      }
+
+      .app {
+        padding: 16px;
+        border-radius: 23px;
+      }
+
+      .header {
+        padding: 23px 20px;
+      }
+
+      .choices {
+        grid-template-columns: 1fr;
+      }
+
+      .difficulty {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .answers {
+        grid-template-columns: 1fr;
+      }
+
+      .question-card {
+        padding: 18px;
+      }
+
+      .result-details {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+    <h1>Z English</h1>
+    <p>Learn smarter. Practice harder. Improve your English.</p>
+  </div>
+
+
+  <!-- =========================
+       START SCREEN
+  ========================== -->
+
+  <div id="startScreen" class="screen">
+
+    <h2 class="section-title">
+      What do you want to practice?
+    </h2>
+
+    <p class="section-subtitle">
+      Choose a learning mode and difficulty.
+    </p>
+
+
+    <div class="choices">
+
+      <div
+        class="choice selected"
+        data-mode="mixed"
+        onclick="chooseMode(this)"
+      >
+        <div class="choice-icon">🧠</div>
+
+        <div class="choice-title">
+          Mixed English
+        </div>
+
+        <div class="choice-desc">
+          Grammar, vocabulary, spelling and tricky English.
+        </div>
+      </div>
+
+
+      <div
+        class="choice"
+        data-mode="grammar"
+        onclick="chooseMode(this)"
+      >
+        <div class="choice-icon">📖</div>
+
+        <div class="choice-title">
+          Grammar
+        </div>
+
+        <div class="choice-desc">
+          Tenses, conditionals, clauses and advanced grammar.
+        </div>
+      </div>
+
+
+      <div
+        class="choice"
+        data-mode="vocabulary"
+        onclick="chooseMode(this)"
+      >
+        <div class="choice-icon">📚</div>
+
+        <div class="choice-title">
+          Vocabulary
+        </div>
+
+        <div class="choice-desc">
+          Synonyms, meanings, phrasal verbs and word usage.
+        </div>
+      </div>
+
+
+      <div
+        class="choice"
+        data-mode="spelling"
+        onclick="chooseMode(this)"
+      >
+        <div class="choice-icon">✍️</div>
+
+        <div class="choice-title">
+          Spelling & Usage
+        </div>
+
+        <div class="choice-desc">
+          Commonly confused and difficult English words.
+        </div>
+      </div>
+
+    </div>
+
+
+    <h2 class="section-title">
+      Difficulty
+    </h2>
+
+    <p class="section-subtitle">
+      How challenging should the questions be?
+    </p>
+
+
+    <div class="difficulty">
+
+      <button onclick="chooseDifficulty(this, 'easy')">
+        🟢 Easy
+      </button>
+
+      <button onclick="chooseDifficulty(this, 'medium')">
+        🟡 Medium
+      </button>
+
+      <button class="selected"
+              onclick="chooseDifficulty(this, 'hard')">
+        🔴 Hard
+      </button>
+
+      <button onclick="chooseDifficulty(this, 'expert')">
+        🟣 Expert
+      </button>
+
+    </div>
+
+
+    <button
+      class="start-button"
+      onclick="startQuiz()"
+    >
+      Start learning →
+    </button>
+
+  </div>
+
+
+  <!-- =========================
+       QUIZ SCREEN
+  ========================== -->
+
+  <div id="quizScreen" class="screen hidden">
+
+    <div class="progress-area">
+
+      <div class="progress-info">
+        <span id="questionNumber">
+          Question 1 of 20
+        </span>
+
+        <span id="progressPercent">
+          0%
+        </span>
+      </div>
+
+      <div class="progress-bar">
+        <div
+          class="progress"
+          id="progress"
+        ></div>
+      </div>
+
+    </div>
+
+
+    <div
+      class="question-card"
+      id="questionCard"
+    >
+
+      <div
+        class="question-tag"
+        id="questionTag"
+      >
+        GRAMMAR
+      </div>
+
+      <div
+        class="question-text"
+        id="questionText"
+      ></div>
+
+      <div
+        class="answers"
+        id="answers"
+      ></div>
+
+      <div
+        class="explanation hidden"
+        id="explanation"
+      ></div>
+
+    </div>
+
+
+    <div class="quiz-controls">
+
+      <button
+        class="control-button secondary"
+        onclick="backToMenu()"
+      >
+        Menu
+      </button>
+
+      <button
+        class="control-button"
+        id="nextButton"
+        onclick="nextQuestion()"
+        disabled
+      >
+        Next →
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       RESULT SCREEN
+  ========================== -->
+
+  <div id="resultScreen" class="screen hidden">
+
+    <div class="result-card">
+
+      <div
+        class="result-emoji"
+        id="resultEmoji"
+      >
+        🌿
+      </div>
+
+      <div
+        class="score"
+        id="score"
+      >
+        0 / 20
+      </div>
+
+      <div
+        class="percent"
+        id="percent"
+      >
+        0% correct
+      </div>
+
+      <div
+        class="result-message"
+        id="resultMessage"
+      ></div>
+
+
+      <div class="result-details">
+
+        <div class="stat">
+          <strong id="correctStat">0</strong>
+          Correct
+        </div>
+
+        <div class="stat">
+          <strong id="wrongStat">0</strong>
+          Incorrect
+        </div>
+
+        <div class="stat">
+          <strong id="difficultyStat">Hard</strong>
+          Level
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div style="margin-top:18px">
+
+      <button
+        class="start-button"
+        onclick="restartQuiz()"
+      >
+        Try another quiz →
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  const TOTAL = 20;
+
+  let mode = "mixed";
+  let difficulty = "hard";
+
+  let questions = [];
+  let currentQuestion = 0;
+
+  let selectedAnswer = null;
+  let score = 0;
+
+  let answered = false;
+
+
+  /*
+    ============================================
+    QUESTION BANK
+    ============================================
+  */
+
+  const questionBank = [
+
+    /* ================= GRAMMAR ================= */
+
+    {
+      type: "grammar",
+      difficulty: "hard",
+
+      question:
+        "Hardly ___ the presentation started when the fire alarm went off.",
+
+      answers: [
+        "had",
+        "had the presentation",
+        "had the presentation started",
+        "the presentation had"
+      ],
+
+      correct: 2,
+
+      explanation:
+        "After 'hardly' at the beginning of a sentence, we use inversion: 'Hardly had the presentation started...'"
+    },
+
+    {
+      type: "grammar",
+      difficulty: "hard",
+
+      question:
+        "If I ___ about the traffic, I would have left earlier.",
+
+      answers: [
+        "knew",
+        "had known",
+        "would know",
+        "have known"
+      ],
+
+      correct: 1,
+
+      explanation:
+        "This is a third conditional: If + past perfect, would have + past participle."
+    },
+
+    {
+      type: "grammar",
+      difficulty: "hard",
+
+      question:
+        "Neither of the students ___ submitted their assignment.",
+
+      answers: [
+        "have",
+        "has",
+        "are",
+        "were"
+      ],
+
+      correct: 1,
+
+      explanation:
+        "'Neither' is grammatically singular, so the formal form is 'neither ... has'."
+    },
+
+    {
+      type: "grammar",
+      difficulty: "hard",
+
+      question:
+        "It is essential that every applicant ___ the form before Friday.",
+
+      answers: [
+        "completes",
+        "completed",
+        "complete",
+        "will complete"
+      ],
+
+      correct: 2,
+
+      explanation:
+        "After expressions such as 'it is essential that', formal English commonly uses the subjunctive: 'that ... complete'."
+    },
+
+    {
+      type: "grammar",
+      difficulty: "hard",
+
+      question:
+        "The woman ___ car was stolen reported the incident immediately.",
+
+      answers: [
+        "who",
+        "which",
+        "whose",
+        "whom"
+      ],
+
+      correct: 2,
+
+      explanation:
+        "'Whose' shows possession: the car belonged to the woman."
+    },
+
+    {
+      type: "grammar",
+      difficulty: "expert",
+
+      question:
+        "Not only ___ late, but he had also forgotten the documents.",
+
+      answers: [
+        "he arrived",
+        "did he arrive",
+        "he did arrive",
+        "arrived he"
+      ],
+
+      correct: 1,
+
+      explanation:
+        "Negative or restrictive expressions such as 'not only' at the beginning require subject-auxiliary inversion."
+    },
+
+    {
+      type: "grammar",
+      difficulty: "expert",
+
+      question:
+        "Had I known about the problem, I ___ you immediately.",
+
+      answers: [
+        "would tell",
+        "would have told",
+        "will tell",
+        "told"
+      ],
+
+      correct: 1,
+
+      explanation:
+        "'Had I known' is an inverted third conditional. The result clause uses 'would have + past participle'."
+    },
+
+    {
+      type: "grammar",
+      difficulty: "expert",
+
+      question:
+        "No sooner ___ the train than it began to snow.",
+
+      answers: [
+        "we boarded",
+        "had we boarded",
+        "we had boarded",
+        "did we board"
+      ],
+
+      correct: 1,
+
+      explanation:
+        "'No sooner' at the beginning takes inversion: 'No sooner had we boarded...'"
+    },
+
+    {
+      type: "grammar",
+      difficulty: "medium",
+
+      question:
+        "By the time we arrived, they ___ dinner.",
+
+      answers: [
+        "finished",
+        "have finished",
+        "had finished",
+        "finish"
+      ],
+
+      correct: 2,
+
+      explanation:
+        "The earlier past action uses the past perfect: 'had finished'."
+    },
+
+    {
+      type: "grammar",
+      difficulty: "medium",
+
+      question:
+        "She has been working here ___ five years.",
+
+      answers: [
+        "since",
+        "for",
+        "during",
+        "from"
+      ],
+
+      correct: 1,
+
+      explanation:
+        "'For' is used with a duration such as 'five years'; 'since' is used with a starting point."
+    },
+
+
+    /* ================= VOCABULARY ================= */
+
+    {
+      type: "vocabulary",
+      difficulty: "hard",
+
+      question:
+        "What does 'ambiguous' mean?",
+
+      answers: [
+        "Open to more than one interpretation",
+        "Extremely obvious",
+        "Completely incorrect",
+        "Very complicated"
+      ],
+
+      correct: 0,
+
+      explanation:
+        "'Ambiguous' describes something that can have more than one possible meaning or interpretation."
+    },
+
+    {
+      type: "vocabulary",
+      difficulty: "hard",
+
+      question:
+        "What does 'reluctant' mean?",
+
+      answers: [
+        "Very enthusiastic",
+        "Unwilling or hesitant",
+        "Extremely confident",
+        "Completely unaware"
+      ],
+
+      correct: 1,
+
+      explanation:
+        "Someone who is reluctant is hesitant or unwilling to do something."
+    },
+
+    {
+      type: "vocabulary",
+      difficulty: "hard",
+
+      question:
+        "If something is 'inevitable', it is...",
+
+      answers: [
+        "Impossible to understand",
+        "Certain to happen",
+        "Easy to prevent",
+        "Already forgotten"
+      ],
+
+      correct: 1,
+
+      explanation:
+        "'Inevitable' means something cannot be avoided and will definitely happen."
+    },
+
+    {
+      type: "vocabulary",
+      difficulty: "expert",
+
+      question:
+        "What does 'meticulous' mean?",
+
+      answers: [
+        "Extremely careful and precise",
+        "Careless and impatient",
+        "Very imaginative",
+        "Difficult to predict"
+      ],
+
+      correct: 0,
+
+      explanation:
+        "'Meticulous' means extremely careful about details."
+    },
+
+    {
+      type: "vocabulary",
+      difficulty: "expert",
+
+      question:
+        "What does 'pragmatic' most closely mean?",
+
+      answers: [
+        "Focused on practical solutions",
+        "Focused entirely on emotions",
+        "Unwilling to compromise",
+        "Based on tradition"
+      ],
+
+      correct: 0,
+
+      explanation:
+        "'Pragmatic' describes an approach based on practical considerations rather than theory alone."
+    },
+
+    {
+      type: "vocabulary",
+      difficulty: "hard",
+
+      question:
+        "Which phrase means 'to reveal a secret accidentally'?",
+
+      answers: [
+        "Break down",
+        "Let the cat out of the bag",
+        "Hit the nail on the head",
+        "Cut corners"
+      ],
+
+      correct: 1,
+
+      explanation:
+        "'Let the cat out of the bag' is an idiom meaning to reveal a secret, often accidentally."
+    },
+
+
+    /* ================= SPELLING ================= */
+
+    {
+      type: "spelling",
+      difficulty: "hard",
+
+      question:
+        "Which spelling is correct?",
+
+      answers: [
+        "Accommodate",
+        "Acommodate",
+        "Accomodate",
+        "Acomodate"
+      ],
+
+      correct: 0,
+
+      explanation:
+        "The correct spelling is 'accommodate' — double c and double m."
+    },
+
+    {
+      type: "spelling",
+      difficulty: "hard",
+
+      question:
+        "Which spelling is correct?",
+
+      answers: [
+        "Conscientious",
+        "Consciencious",
+        "Consientious",
+        "Conscientous"
+      ],
+
+      correct: 0,
+
+      explanation:
+        "The correct spelling is 'conscientious'."
+    },
+
+    {
+      type: "spelling",
+      difficulty: "expert",
+
+      question:
+        "Which spelling is correct?",
+
+      answers: [
+        "Entrepreneur",
+        "Enterpreneur",
+        "Entreprenuer",
+        "Entreprenur"
+      ],
+
+      correct: 0,
+
+      explanation:
+        "The correct spelling is 'entrepreneur'."
+    },
+
+    {
+      type: "spelling",
+      difficulty: "expert",
+
+      question:
+        "Which spelling is correct?",
+
+      answers: [
+        "Miscellaneous",
+        "Miscelaneous",
+        "Miscellanious",
+        "Miscelanous"
+      ],
+
+      correct: 0,
+
+      explanation:
+        "The correct spelling is 'miscellaneous'."
+    },
+
+
+    /* ================= MORE MIXED ================= */
+
+    {
+      type: "vocabulary",
+      difficulty: "expert",
+
+      question:
+        "If a statement is 'plausible', it is...",
+
+      answers: [
+        "Seemingly reasonable or believable",
+        "Definitely proven",
+        "Completely impossible",
+        "Intentionally misleading"
+      ],
+
+      correct: 0,
+
+      explanation:
+        "'Plausible' means something appears reasonable or believable, although it may not necessarily be true."
+    },
+
+    {
+      type: "grammar",
+      difficulty: "expert",
+
+      question:
+        "I wish I ___ more attention during the lecture yesterday.",
+
+      answers: [
+        "paid",
+        "had paid",
+        "would pay",
+        "have paid"
+      ],
+
+      correct: 1,
+
+      explanation:
+        "For regret about a past situation, we use 'wish + past perfect': 'I wish I had paid...'"
+    },
+
+    {
+      type: "grammar",
+      difficulty: "hard",
+
+      question:
+        "She suggested that he ___ earlier the next day.",
+
+      answers: [
+        "leaves",
+        "left",
+        "leave",
+        "would leave"
+      ],
+
+      correct: 2,
+
+      explanation:
+        "After 'suggest that', formal English can use the subjunctive: 'suggested that he leave'."
+    },
+
+    {
+      type: "vocabulary",
+      difficulty: "hard",
+
+      question:
+        "What does 'to scrutinize' something mean?",
+
+      answers: [
+        "To examine it very carefully",
+        "To destroy it completely",
+        "To avoid looking at it",
+        "To replace it immediately"
+      ],
+
+      correct: 0,
+
+      explanation:
+        "To scrutinize something means to examine it very carefully and closely."
+    }
+
+  ];
+
+
+  /* =========================
+     MENU
+  ========================== */
+
+  function chooseMode(element) {
+
+    document
+      .querySelectorAll(".choice")
+      .forEach(choice =>
+        choice.classList.remove("selected")
+      );
+
+    element.classList.add("selected");
+
+    mode = element.dataset.mode;
+  }
+
+
+  function chooseDifficulty(
+    element,
+    level
+  ) {
+
+    document
+      .querySelectorAll(".difficulty button")
+      .forEach(button =>
+        button.classList.remove("selected")
+      );
+
+    element.classList.add("selected");
+
+    difficulty = level;
+  }
+
+
+  /* =========================
+     START
+  ========================== */
+
+  function startQuiz() {
+
+    let available;
+
+    if (mode === "mixed") {
+
+      available =
+        questionBank.filter(q =>
+          q.difficulty === difficulty ||
+          (
+            difficulty === "expert" &&
+            q.difficulty === "hard"
+          )
+        );
+
+    } else {
+
+      available =
+        questionBank.filter(q =>
+          q.type === mode &&
+          (
+            q.difficulty === difficulty ||
+            (
+              difficulty === "expert" &&
+              q.difficulty === "hard"
+            )
+          )
+        );
+
+    }
+
+
+    /*
+      If there aren't enough questions
+      for a specific category, use
+      appropriate questions from the bank.
+    */
+
+    if (available.length < TOTAL) {
+
+      if (mode === "mixed") {
+
+        available =
+          questionBank.filter(q =>
+            q.difficulty === difficulty
+          );
+
+      } else {
+
+        available =
+          questionBank.filter(q =>
+            q.type === mode
+          );
+
+      }
+    }
+
+
+    questions =
+      shuffle(available)
+        .slice(0, TOTAL);
+
+
+    /*
+      If the selected category has
+      fewer than 20 questions, fill
+      the remaining slots with
+      questions from the same
+      difficulty.
+    */
+
+    if (questions.length < TOTAL) {
+
+      const extras =
+        shuffle(
+          questionBank.filter(q =>
+            !questions.includes(q) &&
+            (
+              mode === "mixed" ||
+              q.type === mode
+            )
+          )
+        );
+
+      questions =
+        [
+          ...questions,
+          ...extras
+        ].slice(0, TOTAL);
+    }
+
+
+    currentQuestion = 0;
+    score = 0;
+    selectedAnswer = null;
+    answered = false;
+
+
+    document
+      .getElementById("startScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("resultScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("quizScreen")
+      .classList.remove("hidden");
+
+
+    showQuestion();
+  }
+
+
+  /* =========================
+     QUESTION
+  ========================== */
+
+  function showQuestion() {
+
+    const question =
+      questions[currentQuestion];
+
+    selectedAnswer = null;
+    answered = false;
+
+
+    const card =
+      document.getElementById("questionCard");
+
+
+    card.style.animation = "none";
+
+    void card.offsetWidth;
+
+    card.style.animation =
+      "questionIn .55s var(--ease)";
+
+
+    document.getElementById(
+      "questionNumber"
+    ).textContent =
+      `Question ${currentQuestion + 1} of ${TOTAL}`;
+
+
+    const percentage =
+      Math.round(
+        (currentQuestion / TOTAL) * 100
+      );
+
+
+    document.getElementById(
+      "progressPercent"
+    ).textContent =
+      `${percentage}%`;
+
+
+    document.getElementById(
+      "progress"
+    ).style.width =
+      `${percentage}%`;
+
+
+    document.getElementById(
+      "questionTag"
+    ).textContent =
+      question.type.toUpperCase();
+
+
+    document.getElementById(
+      "questionText"
+    ).textContent =
+      question.question;
+
+
+    const answers =
+      document.getElementById("answers");
+
+    answers.innerHTML = "";
+
+
+    question.answers.forEach(
+      (answer, index) => {
+
+        const button =
+          document.createElement("button");
+
+        button.className =
+          "answer";
+
+        button.textContent =
+          answer;
+
+        button.onclick = () =>
+          selectAnswer(index);
+
+        answers.appendChild(button);
+
+      }
+    );
+
+
+    document
+      .getElementById("explanation")
+      .classList.add("hidden");
+
+
+    document.getElementById(
+      "nextButton"
+    ).disabled = true;
+
+
+    document.getElementById(
+      "nextButton"
+    ).textContent =
+      currentQuestion === TOTAL - 1
+        ? "Finish ✓"
+        : "Next →";
+  }
+
+
+  /* =========================
+     SELECT ANSWER
+  ========================== */
+
+  function selectAnswer(index) {
+
+    if (answered) return;
+
+
+    selectedAnswer = index;
+
+
+    const buttons =
+      document.querySelectorAll(".answer");
+
+
+    buttons.forEach(button =>
+      button.classList.remove("selected")
+    );
+
+
+    buttons[index]
+      .classList.add("selected");
+
+
+    document.getElementById(
+      "nextButton"
+    ).disabled = false;
+  }
+
+
+  /* =========================
+     NEXT
+  ========================== */
+
+  function nextQuestion() {
+
+    if (selectedAnswer === null)
+      return;
+
+
+    if (!answered) {
+
+      checkCurrentAnswer();
+
+      return;
+    }
+
+
+    currentQuestion++;
+
+
+    if (currentQuestion >= TOTAL) {
+
+      showResult();
+
+    } else {
+
+      showQuestion();
+
+    }
+  }
+
+
+  /* =========================
+     CHECK
+  ========================== */
+
+  function checkCurrentAnswer() {
+
+    answered = true;
+
+
+    const question =
+      questions[currentQuestion];
+
+    const buttons =
+      document.querySelectorAll(".answer");
+
+
+    buttons.forEach(
+      (button, index) => {
+
+        button.disabled = true;
+
+
+        if (index === question.correct) {
+
+          button.classList.add("correct");
+
+          button.innerHTML =
+            `${question.answers[index]}
+             <span class="answer-icon">✓</span>`;
+        }
+
+
+        if (
+          index === selectedAnswer &&
+          selectedAnswer !== question.correct
+        ) {
+
+          button.classList.add("wrong");
+
+          button.innerHTML =
+            `${question.answers[index]}
+             <span class="answer-icon">✕</span>`;
+        }
+
+      }
+    );
+
+
+    if (
+      selectedAnswer === question.correct
+    ) {
+
+      score++;
+
+    }
+
+
+    const explanation =
+      document.getElementById(
+        "explanation"
+      );
+
+
+    explanation.innerHTML = `
+      <strong>
+        ${selectedAnswer === question.correct
+          ? "✓ Correct!"
+          : "✕ Not quite."}
+      </strong>
+      ${question.explanation}
+    `;
+
+
+    explanation.classList.remove("hidden");
+
+
+    document.getElementById(
+      "nextButton"
+    ).textContent =
+      currentQuestion === TOTAL - 1
+        ? "See results →"
+        : "Next →";
+
+
+    const completed =
+      currentQuestion + 1;
+
+
+    const percentage =
+      Math.round(
+        (completed / TOTAL) * 100
+      );
+
+
+    document.getElementById(
+      "progressPercent"
+    ).textContent =
+      `${percentage}%`;
+
+
+    document.getElementById(
+      "progress"
+    ).style.width =
+      `${percentage}%`;
+  }
+
+
+  /* =========================
+     RESULT
+  ========================== */
+
+  function showResult() {
+
+    document
+      .getElementById("quizScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("resultScreen")
+      .classList.remove("hidden");
+
+
+    const percentage =
+      Math.round(
+        (score / TOTAL) * 100
+      );
+
+
+    document.getElementById(
+      "score"
+    ).textContent =
+      `${score} / ${TOTAL}`;
+
+
+    document.getElementById(
+      "percent"
+    ).textContent =
+      `${percentage}% correct`;
+
+
+    document.getElementById(
+      "correctStat"
+    ).textContent =
+      score;
+
+
+    document.getElementById(
+      "wrongStat"
+    ).textContent =
+      TOTAL - score;
+
+
+    document.getElementById(
+      "difficultyStat"
+    ).textContent =
+      difficulty.charAt(0).toUpperCase() +
+      difficulty.slice(1);
+
+
+    let emoji;
+    let message;
+
+
+    if (percentage === 100) {
+
+      emoji = "🏆";
+
+      message =
+        "Perfect score! You absolutely crushed this quiz.";
+
+    } else if (percentage >= 90) {
+
+      emoji = "🔥";
+
+      message =
+        "Excellent! Your English knowledge is seriously strong.";
+
+    } else if (percentage >= 80) {
+
+      emoji = "🌟";
+
+      message =
+        "Great work! You're handling some pretty advanced English.";
+
+    } else if (percentage >= 70) {
+
+      emoji = "🌿";
+
+      message =
+        "Nice job! Keep practicing the areas you missed.";
+
+    } else if (percentage >= 50) {
+
+      emoji = "💚";
+
+      message =
+        "Good effort. Review the explanations and try again.";
+
+    } else {
+
+      emoji = "📚";
+
+      message =
+        "Keep going! Every mistake is another thing you can learn.";
+    }
+
+
+    document.getElementById(
+      "resultEmoji"
+    ).textContent =
+      emoji;
+
+
+    document.getElementById(
+      "resultMessage"
+    ).textContent =
+      message;
+
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+
+  /* =========================
+     RESTART
+  ========================== */
+
+  function restartQuiz() {
+
+    document
+      .getElementById("resultScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("startScreen")
+      .classList.remove("hidden");
+  }
+
+
+  function backToMenu() {
+
+    document
+      .getElementById("quizScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("startScreen")
+      .classList.remove("hidden");
+  }
+
+
+  /* =========================
+     SHUFFLE
+  ========================== */
+
+  function shuffle(array) {
+
+    const copy = [...array];
+
+    for (
+      let i = copy.length - 1;
+      i > 0;
+      i--
+    ) {
+
+      const j =
+        Math.floor(
+          Math.random() * (i + 1)
+        );
+
+      [
+        copy[i],
+        copy[j]
+      ] = [
+        copy[j],
+        copy[i]
+      ];
+    }
+
+    return copy;
+  }
+
+</script>
+
+</body>
+</html>
